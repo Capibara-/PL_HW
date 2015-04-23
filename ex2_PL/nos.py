@@ -18,7 +18,7 @@ def nos(S, s):
     Implements Table 2.1 from the book.
 
     --- MODIFY THIS FUNCTION QUESTIONS 1, 3 ---
-    @YAEL: Q1-DONE
+    @YAEL: Q1-DONE.
     """
 
     if type(S) is Skip:
