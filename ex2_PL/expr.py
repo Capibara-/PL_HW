@@ -90,6 +90,7 @@ if __name__ == '__main__':
     print eval_arith_expr(a, {'x':10})
     print
 
+    # (1 <= 2) and not(false)
     b = And(LE(ALit(1), ALit(2)),
             Not(BLit(False)))
 
@@ -97,7 +98,20 @@ if __name__ == '__main__':
     print eval_bool_expr(b, {'x':10})
     print
 
-    #
-    # --- ADD MORE TESTS HERE ---
-    #
+    # (x * (x - 1) * (x + 1)) mod 211
+    c = Mod(Times(Times(Plus(Var('x'), ALit(1)),
+                        Minus(Var('x'), ALit(1))),
+                        Var('x')),
+            ALit(211))
 
+    print c
+    print eval_arith_expr(c, {'x':10})
+    print
+
+    # (x * (x + 2)) / (x - 1)
+    d = Div(Times(Var('x'), Plus(Var('x'), ALit(2))),
+            Minus(Var('x'), ALit(1)))
+
+    print d
+    print eval_arith_expr(d, {'x':5})
+    print
