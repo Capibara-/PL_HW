@@ -19,9 +19,6 @@ def eval_arith_expr(e, s):
     Semantics of arithmetic expressions.
 
     Implements Table 1.1 from the book.
-
-    --- MODIFY THIS FUNCTION IN QUESTION 1 ---
-    @YAEL: DONE
     """
 
     if type(e) is ALit:
@@ -54,10 +51,6 @@ def eval_bool_expr(e, s):
     Semantics of arithmetic expressions
 
     Implements Table 1.2 from the book.
-
-    --- MODIFY THIS FUNCTION IN QUESTION 1 ---
-    @YAEL: DONE
-
     """
 
     if type(e) is BLit:

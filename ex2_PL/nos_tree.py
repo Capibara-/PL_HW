@@ -14,7 +14,6 @@ def nos_tree(S, s):
     Implements Table 2.1 from the book.
 
     --- MODIFY THIS FUNCTION QUESTIONS 1, 3 ---
-    @YAEL: Q1 - DONE
     """
 
     if type(S) is Skip:
@@ -69,19 +68,20 @@ def nos_tree(S, s):
 if __name__ == '__main__':
     from tree_to_dot import view_tree
 
-    # @YAEL: factor example given with the code
-    prog = Comp(Assign('y', ALit(1)),
-                While(Not(Eq(Var('x'), ALit(1))),
-                      Comp(Assign('y', Times(Var('y'), Var('x'))),
-                           Assign('x', Minus(Var('x'), ALit(1))))))
-    s, tree = nos_tree(prog, {'x': 5})
-    # @YAEL: GCD from Q1
-    prog = Comp(Assign('t', ALit(0)),
-                While(Not(Eq(Var('b'), ALit(0))),
-                      (Comp(Assign('t', Var('b')),
-                       Assign('b', Comp(Mod(Var('a'), Var('b')), Skip()))),
-                       Comp(Assign('a', Var('t')), Skip()))))
-    s, tree = nos_tree(prog, {'a': 84, 'b': 30})
+    # factor example given with the code
+    #prog = Comp(Assign('y', ALit(1)),
+    #            While(Not(Eq(Var('x'), ALit(1))),
+    #                  Comp(Assign('y', Times(Var('y'), Var('x'))),
+    #                       Assign('x', Minus(Var('x'), ALit(1))))))
+    #s, tree = nos_tree(prog, {'x': 5})
+    # GCD from Q1
+    prog = Comp(Assign('a', ALit(84)),
+                Comp(Assign('b', ALit(30)),
+                     While(Not(Eq(Var('b'), ALit(0))),
+                           Comp(Assign('t', Var('b')),
+                                Comp(Assign('b', Mod(Var('a'), Var('b'))),
+                                Assign('a', Var('t')))))))
+    s, tree = nos_tree(prog, {})
     print s
     print
     print tree

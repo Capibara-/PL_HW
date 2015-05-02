@@ -20,7 +20,6 @@ def sos(S, s):
     Implements Table 2.2 from the book.
 
     --- MODIFY THIS FUNCTION QUESTIONS 1, 3 ---
-    @YAEL: Q1 - DONE
     """
 
     if type(S) is Skip:
@@ -68,7 +67,7 @@ def run_sos(S, s):
 
 
 if __name__ == '__main__':
-    # @YAEL: factoring example. given with the code
+    # factoring example. given with the code
     """
     prog = Comp(Assign('y', ALit(1)),
                 While(Not(Eq(Var('x'), ALit(1))),
@@ -76,10 +75,11 @@ if __name__ == '__main__':
                            Assign('x', Minus(Var('x'), ALit(1))))))
     run_sos(prog, {'x': 5})
     """
-    # @YAEL: GCD from Q1
-    prog = Comp(Assign('t', ALit(0)),
-                While(Not(Eq(Var('b'), ALit(0))),
-                      (Comp(Assign('t', Var('b')),
-                       Assign('b', Comp(Mod(Var('a'), Var('b')), Skip()))),
-                       Comp(Assign('a', Var('t')), Skip()))))
-    run_sos(prog, {'a': 84, 'b': 30})
+    # GCD from Q1
+    prog = Comp(Assign('a', ALit(84)),
+                Comp(Assign('b', ALit(30)),
+                     While(Not(Eq(Var('b'), ALit(0))),
+                           Comp(Assign('t', Var('b')),
+                                Comp(Assign('b', Mod(Var('a'), Var('b'))),
+                                Assign('a', Var('t')))))))
+    run_sos(prog, {})
