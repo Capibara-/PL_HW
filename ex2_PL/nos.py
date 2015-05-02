@@ -71,17 +71,11 @@ if __name__ == '__main__':
                 While(Not(Eq(Var('x'), ALit(1))),
                       Comp(Assign('y', Times(Var('y'), Var('x'))),
                            Assign('x', Minus(Var('x'), ALit(1))))))
-
     print nos(prog1, {'x': 5})
 
-    # x = 55; repeat x := x - 10 until x < 10
-    prog2 = Comp(Assign('x', ALit(55)),
+    # x := 55; repeat x := x - 10 until x < 10
+    prog2 = Comp(Assign('x', ALit(7)),
                  Repeat(Comp(Assign('x', Minus(Var('x'), ALit(10))), Skip()),
                         And(LE(Var('x'), ALit(10)),
                             Not(Eq(Var('x'), ALit(10))))))
-
-    print nos(prog2, {'x' : 55})
-
-    prog3 = Comp(Assign('x', ALit(1)), While(And(LE(Var('x'), ALit(10)),
-                            Not(Eq(Var('x'), ALit(10)))), Comp(Assign('x', Plus(Var('x'), ALit(1))), Assign('x', Plus(Var('x'), ALit(1))))))
-    print nos(prog3, {'x' : 1})
+    print nos(prog2, {'x' : 7})

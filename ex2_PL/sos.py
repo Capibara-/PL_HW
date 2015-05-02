@@ -48,6 +48,10 @@ def sos(S, s):
     elif type(S) is While:
         return (If(S.b, Comp(S.S, While(S.b, S.S)), Skip()), s)
 
+    elif type(S) is Repeat:
+        return (Comp(S.S, If(S.b, Skip(), Repeat(S, S.b))), s)
+
+
     else:
         assert ff  # Error
 
@@ -68,13 +72,12 @@ def run_sos(S, s):
 
 if __name__ == '__main__':
     # factoring example. given with the code
-    """
     prog = Comp(Assign('y', ALit(1)),
                 While(Not(Eq(Var('x'), ALit(1))),
                       Comp(Assign('y', Times(Var('y'), Var('x'))),
                            Assign('x', Minus(Var('x'), ALit(1))))))
     run_sos(prog, {'x': 5})
-    """
+
     # GCD from Q1
     prog = Comp(Assign('a', ALit(84)),
                 Comp(Assign('b', ALit(30)),
@@ -83,3 +86,10 @@ if __name__ == '__main__':
                                 Comp(Assign('b', Mod(Var('a'), Var('b'))),
                                 Assign('a', Var('t')))))))
     run_sos(prog, {})
+
+    # x := 55; repeat x := x - 10 until x < 10
+    prog2 = Comp(Assign('x', ALit(5)),
+                 Repeat(Comp(Assign('x', Minus(Var('x'), ALit(10))), Skip()),
+                        And(LE(Var('x'), ALit(10)),
+                            Not(Eq(Var('x'), ALit(10))))))
+    run_sos(prog2, {})
