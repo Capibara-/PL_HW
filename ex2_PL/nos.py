@@ -50,18 +50,39 @@ def nos(S, s):
     elif type(S) is While and eval_bool_expr(S.b, s) is ff:
         return s
 
+    elif type(S) is Repeat and eval_bool_expr(S.b, s) is ff:
+        sp = nos(S.S, s)
+        if eval_bool_expr(S.b, sp) is ff:
+            spp = nos(Repeat(S.S, S.b), sp)
+            return spp
+        else:
+            return sp
+
+    elif type(S) is Repeat and eval_bool_expr(S.b, s) is tt:
+        sp = nos(S.S, s)
+        return sp
+
     else:
         assert ff  # Error
 
 
 if __name__ == '__main__':
-    prog = Comp(Assign('y', ALit(1)),
+    # y = 1; while (x != 1) { y = y * x; x = x - 1 }
+    prog1 = Comp(Assign('y', ALit(1)),
                 While(Not(Eq(Var('x'), ALit(1))),
                       Comp(Assign('y', Times(Var('y'), Var('x'))),
                            Assign('x', Minus(Var('x'), ALit(1))))))
 
-    print nos(prog, {'x': 5})
+    print nos(prog1, {'x': 5})
 
-    #
-    # --- ADD MORE TESTS HERE ---
-    #
+    # x = 55; repeat x := x - 10 until x < 10
+    prog2 = Comp(Assign('x', ALit(55)),
+                 Repeat(Comp(Assign('x', Minus(Var('x'), ALit(10))), Skip()),
+                        And(LE(Var('x'), ALit(10)),
+                            Not(Eq(Var('x'), ALit(10))))))
+
+    print nos(prog2, {'x' : 55})
+
+    prog3 = Comp(Assign('x', ALit(1)), While(And(LE(Var('x'), ALit(10)),
+                            Not(Eq(Var('x'), ALit(10)))), Comp(Assign('x', Plus(Var('x'), ALit(1))), Assign('x', Plus(Var('x'), ALit(1))))))
+    print nos(prog3, {'x' : 1})

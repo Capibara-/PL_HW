@@ -70,13 +70,13 @@ def eval_bool_expr(e, s):
         return tt if eval_arith_expr(e.a1, s) <= eval_arith_expr(e.a2, s) else ff
 
     elif type(e) is Not:
-        return tt if not eval_bool_expr(e.b, s) else ff
+        return tt if (eval_bool_expr(e.b, s) == ff) else ff
 
     elif type(e) is And:
-        return tt if eval_bool_expr(e.b1, s) and eval_bool_expr(e.b2, s) else ff
+        return tt if (eval_bool_expr(e.b1, s) == tt) and (eval_bool_expr(e.b2, s) == tt) else ff
 
     elif type(e) is Or:
-        return tt if eval_bool_expr(e.b1, s) or eval_bool_expr(e.b2, s) else ff
+        return tt if (eval_bool_expr(e.b1, s) == tt) or (eval_bool_expr(e.b2, s) == tt) else ff
 
     else:
         assert ff  # Error
